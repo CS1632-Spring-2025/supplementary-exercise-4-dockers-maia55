@@ -10,6 +10,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.Dimension;
@@ -36,12 +37,13 @@ public class D3Test {
   JavascriptExecutor js;
   @Before
   public void setUp() {
-    driver = new ChromeDriver();
-    js = (JavascriptExecutor) driver;
-    vars = new HashMap<String, Object>();
     ChromeOptions options = new ChromeOptions();
     options.addArguments("--headless");
     driver = new ChromeDriver(options);
+    //driver = new ChromeDriver();
+    js = (JavascriptExecutor) driver;
+    vars = new HashMap<String, Object>();
+    
   }
   @After
   public void tearDown() {
@@ -49,18 +51,18 @@ public class D3Test {
   }
   @Test
   public void tEST1LINKS() {
-    driver.get(" http://localhost:8080//");
+    driver.get(" http://localhost:8080/");
     js.executeScript("document.cookie = \"1=false\";document.cookie = \"2=false\";document.cookie = \"3=false\";");
     {
       WebElement element = driver.findElement(By.linkText("Reset"));
       String attribute = element.getAttribute("href");
       vars.put("reset", attribute);
     }
-    assertEquals(vars.get("reset").toString(), "https://cs1632.appspot.com/reset");
+    assertEquals(vars.get("reset").toString(), "http://localhost:8080/reset");
   }
   @Test
   public void tEST2RESET() {
-    driver.get(" http://localhost:8080//");
+    driver.get(" http://localhost:8080/");
     js.executeScript("document.cookie = \"1=true\";document.cookie = \"2=true\";document.cookie = \"3=true\";");
     driver.findElement(By.xpath("//a[contains(@href, \'/reset\')]")).click();
     {
@@ -73,7 +75,7 @@ public class D3Test {
   }
   @Test
   public void tEST3CATALOG() {
-    driver.get(" http://localhost:8080//");
+    driver.get(" http://localhost:8080/");
     js.executeScript("document.cookie = \"1=false\";document.cookie = \"2=false\";document.cookie = \"3=false\";");
     driver.findElement(By.xpath("//a[contains(text(),\'Catalog\')]")).click();
     {
@@ -85,11 +87,11 @@ public class D3Test {
       String attribute = element.getAttribute("src");
       vars.put("cat2", attribute);
     }
-    assertEquals(vars.get("cat2").toString(), "https://cs1632.appspot.com/images/cat2.jpg");
+    assertEquals(vars.get("cat2").toString(), "http://localhost:8080/images/cat2.jpg");
   }
   @Test
   public void tEST4LISTING() {
-    driver.get(" http://localhost:8080//");
+    driver.get(" http://localhost:8080/");
     js.executeScript("document.cookie = \"1=false\";document.cookie = \"2=false\";document.cookie = \"3=false\";");
     driver.findElement(By.xpath("//a[contains(text(),\'Catalog\')]")).click();
     {
@@ -116,7 +118,7 @@ public class D3Test {
   }
   @Test
   public void tEST5RENTACAT() {
-    driver.get(" http://localhost:8080//");
+    driver.get(" http://localhost:8080/");
     js.executeScript("document.cookie = \"1=false\";document.cookie = \"2=false\";document.cookie = \"3=false\";");
     driver.findElement(By.xpath("//a[contains(@href, \'/rent-a-cat\')]")).click();
     {
@@ -134,7 +136,7 @@ public class D3Test {
   }
   @Test
   public void tEST6RENT() {
-    driver.get(" http://localhost:8080//");
+    driver.get(" http://localhost:8080/");
     js.executeScript("document.cookie = \"1=false\";document.cookie = \"2=false\";document.cookie = \"3=false\";");
     driver.findElement(By.xpath("//a[contains(text(),\'Rent-A-Cat\')]")).click();
     {
@@ -154,7 +156,7 @@ public class D3Test {
   }
   @Test
   public void tEST7RETURN() {
-    driver.get(" http://localhost:8080//");
+    driver.get(" http://localhost:8080/");
     js.executeScript("document.cookie = \"1=false\";document.cookie = \"2=true\";document.cookie = \"3=false\";");
     driver.findElement(By.xpath("//a[contains(text(),\'Rent-A-Cat\')]")).click();
     {
@@ -174,7 +176,7 @@ public class D3Test {
   }
   @Test
   public void tEST8FEEDACAT() {
-    driver.get(" http://localhost:8080//");
+    driver.get(" http://localhost:8080/");
     js.executeScript("document.cookie = \"1=false\";document.cookie = \"2=false\";document.cookie = \"3=false\";");
     driver.findElement(By.xpath("//a[contains(text(),\'Feed-A-Cat\')]")).click();
     {
